@@ -1,4 +1,3 @@
-version: '3'
 services:
   mongo:
     image: mongo:6.0
@@ -17,26 +16,6 @@ services:
     networks:
       default:
         ipv4_address: ${MONGO_IP}
-  webui:
-    image: docker_open5gs
-    container_name: webui
-    depends_on:
-      - mongo
-    env_file:
-      - .env
-    environment:
-      - COMPONENT_NAME=webui
-    volumes:
-      - ./webui:/mnt/webui
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    expose:
-      - "9999/tcp"
-    ports:
-      - "9999:9999/tcp"
-    networks:
-      default:
-        ipv4_address: ${WEBUI_IP}
   nrf:
     image: docker_open5gs
     container_name: nrf
