@@ -1,4 +1,0 @@
-debugpy
-pysctp
-pycryptodome
-pycrate
