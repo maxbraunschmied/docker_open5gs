@@ -46,9 +46,9 @@ cp /mnt/srsran/qos.yml /etc/srsran/qos.yml
 
 sed -i 's|PLMN|'$MCC''$MNC'|g' /etc/srsran/gnb.yml
 sed -i 's|AMF_IP|'$AMF_IP'|g' /etc/srsran/gnb.yml
-sed -i 's|SRS_GNB_IP|'$SRS_GNB_IP'|g' /etc/srsran/gnb.yml
+sed -i 's|SRS_GNB1_IP|'$SRS_GNB1_IP'|g' /etc/srsran/gnb.yml
 sed -i 's|SRS_UE_IP|'$SRS_UE_IP'|g' /etc/srsran/gnb.yml
-sed -i 's|MITM_IP|'$MITM_IP'|g' /etc/srsran/gnb.yml
+sed -i 's|MITM1_IP|'$MITM1_IP'|g' /etc/srsran/gnb.yml
 
 # For dbus not started issue when host machine is running Ubuntu 22.04
 service dbus start && service avahi-daemon start

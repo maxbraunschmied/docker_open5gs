@@ -21,7 +21,7 @@ services:
       - "2001/tcp"
     networks:
       default:
-        ipv4_address: ${SRS_GNB_IP}
+        ipv4_address: ${SRS_GNB1_IP}
 networks:
   default:
     external:

@@ -1,7 +1,14 @@
-amf:
-  addr: AMF_IP
-  port: 38412                                              # The address or hostname of the AMF.
-  bind_addr: SRS_GNB1_IP                                         # A local IP that the gNB binds to for traffic from the AMF.
+cu_cp:
+  amf:
+    addr: AMF_IP
+    port: 38412                                              # The address or hostname of the AMF.
+    bind_addr: SRS_GNB2_IP
+    supported_tracking_areas:
+      - tac: 1
+        plmn_list:
+          - plmn: "PLMN"
+            tai_slice_support_list:
+              - sst: 1                                         # A local IP that the gNB binds to for traffic from the AMF.
 
 cu_cp:
   security:
@@ -9,16 +16,16 @@ cu_cp:
     
 ru_sdr:
   device_driver: uhd                                            # The RF driver name.
-  device_args: serial=32C7935  # Optionally pass arguments to the selected RF driver.
-  clock: external                                               # Specify the clock source used by the RF.
+  device_args: serial=da50ad69a8c1448b9af85e7bb6c5a6f6  # Optionally pass arguments to the selected RF driver.
+  clock:                                              # Specify the clock source used by the RF.
   sync:                                              # Specify the sync source used by the RF.
   srate: 23.04                                                  # RF sample rate might need to be adjusted according to selected bandwidth.
   otw_format: sc12
-  tx_gain: 80                                                   # Transmit gain of the RF might need to adjusted to the given situation.
+  tx_gain: -80                                                  # Transmit gain of the RF might need to adjusted to the given situation.
   rx_gain: 40                                                   # Receive gain of the RF might need to adjusted to the given situation.
 
 cell_cfg:
-  dl_arfcn: 632628                                                # ARFCN of the downlink carrier (center frequency).
+  dl_arfcn: 634240                                           # ARFCN of the downlink carrier (center frequency).
   band: 78                                                        # The NR band.
   channel_bandwidth_MHz: 20                                       # Bandwith in MHz. Number of PRBs will be automatically derived.
   common_scs: 30                                                  # Subcarrier spacing in kHz used for data.

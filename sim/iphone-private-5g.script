@@ -6,7 +6,7 @@ set debug true
 # this script will activate all 5G related services and files required for iPhone to allow SA operation.
 
 # TODO: add your card-specific ADM pin at the end of the verify_adm line below
-verify_adm 97965180
+verify_adm 99100008
 
 # activate any 5G related services in EF.UST
 select ADF.USIM
@@ -37,16 +37,16 @@ select EF.SUPI_NAI
 deactivate_file
 
 # only exists on sysmoISIM-SJA2v2
-select EF.URSP
-deactivate_file
+# select EF.URSP
+# deactivate_file
 
 # only exists on sysmoISIM-SJA2v2
-select EF.TN3GPPSNN
-deactivate_file
+# select EF.TN3GPPSNN
+# deactivate_file
 
 # only exists on sysmoISIM-SJA2v2
-select EF.OPL5G
-deactivate_file
+# select EF.OPL5G
+# deactivate_file
 
 select EF.5GAUTHKEYS
 deactivate_file
@@ -67,7 +67,7 @@ update_binary 00000000
 activate_file EF.SUCI_Calc_Info
 select EF.SUCI_Calc_Info
 # TODO: Update the public key based on your deployment
-update_binary_decoded {"prot_scheme_id_list":[{"priority":0,"identifier":1,"key_index":1},{"priority":1,"identifier":0,"key_index":0}],"hnet_pubkey_list":[{"hnet_pubkey_identifier":1,"hnet_pubkey":"28ea6090c84ba15d44cb19123a5d1a28c1aa560af6cad33f12afa660b821fa13"}]}
+update_binary_decoded {"prot_scheme_id_list":[{"priority":0,"identifier":2,"key_index":2},{"priority":1,"identifier":1,"key_index":1},{"priority":2,"identifier":0,"key_index":0}],"hnet_pubkey_list":[{"hnet_pubkey_identifier":1,"hnet_pubkey":"e421686f6fb2d70e3fa28d940494095686c3179fef53514667a6ed106b8a7d3d"},{"hnet_pubkey_identifier":2,"hnet_pubkey":"04adefcd1317d1ce8562ec25b91b4800120e1236d6e2661ea4235a84e3c85da244bc42a594cf5612f49e8fbe2857d8e499f91322c737fccf1bbdb6e4d424a80a95"}]}
 
 activate_file EF.UAC_AIC
 select EF.UAC_AIC

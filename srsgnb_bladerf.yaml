@@ -1,7 +1,7 @@
 services:
-  srsgnb:
-    image: docker_srsran
-    container_name: srsgnb
+  srsgnb_bladeRF:
+    image: docker_srsran_bladerf
+    container_name: srsgnb_bladerf
     stdin_open: true
     tty: true
     privileged: true
@@ -10,7 +10,7 @@ services:
     volumes:
       - /dev/serial:/dev/serial:ro
       - /dev/bus/usb:/dev/bus/usb:ro
-      - ./srsran:/mnt/srsran
+      - ./srsran_bladerf:/mnt/srsran
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     env_file:
@@ -22,7 +22,7 @@ services:
       - "2152/udp"
     networks:
       default:
-        ipv4_address: ${SRS_GNB1_IP}
+        ipv4_address: ${SRS_GNB2_IP}
 networks:
   default:
     name: docker_open5gs_default

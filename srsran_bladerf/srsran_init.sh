@@ -26,15 +26,34 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cp /mnt/amf/amf.yaml install/etc/open5gs
-sed -i 's|AMF_IP|'$AMF_IP'|g' install/etc/open5gs/amf.yaml
-sed -i 's|SCP_IP|'$SCP_IP'|g' install/etc/open5gs/amf.yaml
-sed -i 's|NRF_IP|'$NRF_IP'|g' install/etc/open5gs/amf.yaml
-sed -i 's|MNC|'$MNC'|g' install/etc/open5gs/amf.yaml
-sed -i 's|MCC|'$MCC'|g' install/etc/open5gs/amf.yaml
-sed -i 's|MAX_NUM_UE|'$MAX_NUM_UE'|g' install/etc/open5gs/amf.yaml
-sed -i 's|MITM1_IP|'$MITM1_IP'|g' install/etc/open5gs/amf.yaml
-sed -i 's|MITM2_IP|'$MITM2_IP'|g' install/etc/open5gs/amf.yaml
+export IP_ADDR=$(awk 'END{print $1}' /etc/hosts)
+
+mkdir -p /etc/srsran
+
+if [[ -z "$COMPONENT_NAME" ]]; then
+	echo "Error: COMPONENT_NAME environment variable not set"; exit 1;
+elif [[ "$COMPONENT_NAME" =~ ^(gnb$) ]]; then
+	echo "Configuring component: '$COMPONENT_NAME'"
+	cp /mnt/srsran/gnb.yml /etc/srsran/gnb.yml
+elif [[ "$COMPONENT_NAME" =~ ^(gnb_zmq$) ]]; then
+	echo "Configuring component: '$COMPONENT_NAME'"
+	cp /mnt/srsran/gnb_zmq.yml /etc/srsran/gnb.yml
+else
+	echo "Error: Invalid component name: '$COMPONENT_NAME'"
+fi
+
+cp /mnt/srsran/qos.yml /etc/srsran/qos.yml
+
+sed -i 's|PLMN|'$MCC''$MNC'|g' /etc/srsran/gnb.yml
+sed -i 's|AMF_IP|'$AMF_IP'|g' /etc/srsran/gnb.yml
+sed -i 's|SRS_GNB2_IP|'$SRS_GNB2_IP'|g' /etc/srsran/gnb.yml
+sed -i 's|SRS_UE_IP|'$SRS_UE_IP'|g' /etc/srsran/gnb.yml
+sed -i 's|MITM2_IP|'$MITM2_IP'|g' /etc/srsran/gnb.yml
+
+# For dbus not started issue when host machine is running Ubuntu 22.04
+service dbus start && service avahi-daemon start
+
+gnb -c /etc/srsran/gnb.yml -c /etc/srsran/qos.yml
 
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
